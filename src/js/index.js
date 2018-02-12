@@ -570,6 +570,8 @@ class APlayer {
             // multiple music play
             this.ended = false;
             this.audio.addEventListener('ended', () => {
+              this.trigger('ended');
+
                 if (this.isMultiple()) {
                     if (this.audio.currentTime !== 0) {
                         if (this.mode === 'random') {
@@ -855,32 +857,30 @@ class APlayer {
                     if (this.option.music[indexOfSong + 1]) { // Play next song if it exists.
                         this.setMusic(indexOfSong + 1);
                         this.playIndex = this.playIndex - 1; // Adjust play index for removed song
-                    }
-                    else if (!this.option.music[indexOfSong + 1]) { // Play previous song if it exists.
+                    }else if (this.option.music[indexOfSong - 1]) { // Play previous song if it exists.
                         this.setMusic(indexOfSong - 1);
                     }
-                }
-                else {
+                }else {
                     if (indexOfSong < this.playIndex) {
                         this.playIndex = this.playIndex - 1;
                     }
                 }
-                // if (liList[indexOfSong + 1]) {
-                //     const targetSong = liList[indexOfSong - 1];
-                //     targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong;
-                // }
-                // else {
-                //     for (let i = 1; i < liList.length; i++) {
-                //         if (liList[indexOfSong + i]) {
-                //             const targetSong = liList[indexOfSong + i];
-                //             targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong + i;
-                //         }
-                //     }
-                // }
-                this.option.music.splice(indexOfSong, 1); // Delete song from music array
-                this.audios.splice(indexOfSong, 1); // Delete song from audios array
+                if (liList[indexOfSong + 1]) {
+                    const targetSong = liList[indexOfSong + 1];
+                    targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong+1;
+                }
+
+                    for (let i = indexOfSong; i < liList.length; i++) {
+                        if (liList[indexOfSong + i]) {
+                            const targetSong = liList[indexOfSong + i];
+                            targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong + i;
+                        }
+                    }
+
+                 this.option.music.splice(indexOfSong, 1); // Delete song from music array
+                 this.audios.splice(indexOfSong, 1); // Delete song from audios array
                 liList[indexOfSong].remove();
-                if (this.option.music[0] && this.option.music[1]) {
+                if (this.option.music[0] && this.option.music[1] == undefined) {
                     this.multiple = false;
                     this.element.classList.remove('aplayer-withlist');
                 }
