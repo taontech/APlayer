@@ -865,18 +865,18 @@ class APlayer {
                         this.playIndex = this.playIndex - 1;
                     }
                 }
-                if (liList[indexOfSong + 1]) {
-                    const targetSong = liList[indexOfSong - 1];
-                    targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong;
-                }
-                else {
-                    for (let i = 1; i < liList.length; i++) {
-                        if (liList[indexOfSong + i]) {
-                            const targetSong = liList[indexOfSong + i];
-                            targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong + i;
-                        }
-                    }
-                }
+                // if (liList[indexOfSong + 1]) {
+                //     const targetSong = liList[indexOfSong - 1];
+                //     targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong;
+                // }
+                // else {
+                //     for (let i = 1; i < liList.length; i++) {
+                //         if (liList[indexOfSong + i]) {
+                //             const targetSong = liList[indexOfSong + i];
+                //             targetSong.getElementsByClassName('aplayer-list-index')[0].textContent = indexOfSong + i;
+                //         }
+                //     }
+                // }
                 this.option.music.splice(indexOfSong, 1); // Delete song from music array
                 this.audios.splice(indexOfSong, 1); // Delete song from audios array
                 liList[indexOfSong].remove();
