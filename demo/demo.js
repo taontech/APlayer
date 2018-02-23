@@ -139,7 +139,7 @@ const ap5 = new APlayer({
     element: document.getElementById('player5'),
     narrow: false,
     autoplay: false,
-    showlrc: 3,
+    showlrc: 4,
     mutex: true,
     theme: '#ad7a86',
     mode: 'random',
@@ -150,7 +150,7 @@ const ap5 = new APlayer({
             author: '七森中☆ごらく部',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc'
+            lrc: 'https://api.darlin.me/music/lyric/5088194/'
         },
         {
             title: 'secret base~君がくれたもの~',

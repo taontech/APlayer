@@ -1,7 +1,7 @@
 console.log("\n %c APlayer 1.6.1 %c http://aplayer.js.org \n\n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;");
 
 import '../css/index.scss';
-
+import Base64 from './base64'
 const instances = [];
 
 class APlayer {
@@ -695,6 +695,35 @@ class APlayer {
                     const apiurl = this.option.music[index].lrc;
                     xhr.open('get', apiurl, true);
                     xhr.send(null);
+                }else if (this.option.showlrc === 4)
+                {
+                    // jsonp 格式的回调
+                    // https://api.darlin.me/music/lyric/5088194/
+                    var self = this;
+                    window.MusicJsonCallback = function(data) {
+                        // handle requested data from server
+                        console.log("哈哈哈，终于回调回来了");
+                        var lyc = Base64
+                            .decode(data.lyric);
+                        self.lrc =  parseLrc(lyc);
+                        let lrcHTML = '';
+                        self.lrcContents = self.element.getElementsByClassName('aplayer-lrc-contents')[0];
+                        for (let i = 0; i < self.lrc.length; i++) {
+                            lrcHTML += `<p>${self.lrc[i][1]}</p>`;
+                        }
+                        self.lrcContents.innerHTML = lrcHTML;
+                        if (!self.lrcIndex) {
+                            self.lrcIndex = 0;
+                        }
+                        self.lrcContents.getElementsByTagName('p')[0].classList.add('aplayer-lrc-current');
+                        self.lrcContents.style.transform = 'translateY(0px)';
+                        self.lrcContents.style.webkitTransform = 'translateY(0px)';
+                    };
+
+                    var scriptEl = document.createElement('script');
+                    scriptEl.setAttribute('src',
+                        this.option.music[index].lrc);
+                    document.body.appendChild(scriptEl);
                 }
                 if (lrcs) {
                     this.lrcs[index] = parseLrc(lrcs);
